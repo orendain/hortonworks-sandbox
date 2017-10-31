@@ -1,0 +1,37 @@
+[
+  {
+    "type": "nifi-ambari-ssl-config",
+    "properties" : {
+      "nifi.toolkit.tls.token": "hortonworks1",
+      "nifi.security.keystorePasswd" : "hortonworks1",
+      "nifi.security.keyPasswd" : "hortonworks1",
+      "nifi.security.truststorePasswd" : ""
+    }
+  },
+  {
+    "type": "nifi-ambari-config",
+    "properties" : {
+      "nifi.security.encrypt.configuration.password": "hortonworks1",
+      "nifi.sensitive.props.key": "hortonworks1"
+    }
+  },
+  {
+    "type": "kafka-broker",
+    "properties" : {
+      "delete.topic.enable" : "true"
+    }
+  },
+  {
+    "type": "registry-common",
+    "properties" : {
+      "registry.storage.connector.password": "hortonworks1"
+    }
+  },
+  {
+    "type": "streamline-common",
+    "properties" : {
+      "streamline.storage.connector.password": "hortonworks1",
+      "storm.client.home" : "/usr/hdp/current/storm-client"
+    }
+  }
+]
