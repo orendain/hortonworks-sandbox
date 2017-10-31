@@ -1,29 +1,22 @@
 #!/usr/bin/env bash
 
 # Build options
-version="0.5.0"
-dockerRepo="orendain"
-
+version="latest"
 export PACKER_LOG=0
 
-# Script directory
+# Script directory (so this script can be called from anywhere)
 scriptDir="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
-# Specifiy sandboxes to build
+# List all your sandboxes here to build at once (in series)
 sandboxesToBuild=(
-
-  # HDP Sandboxes
   hdp-sandbox-name
-
-  # HDF Sandboxes
-  hdp-sandbox-name
+  #hdp-sandbox-name-2
+  #hdp-sandbox-name-3
 )
 
-# Build docker image followed by packer job for each sandbox
-# Addiitionally, tag the most-recently build image with the latest tag
+# For each sandbox, build docker image followed by running its packer job
 for sandboxName in "${sandboxesToBuild[@]}";
 do
-  docker build -t $dockerRepo/sandbox-$sandboxName-pre:$version --build-arg VERSION=$version $scriptDir/$sandboxName
-  cd $scriptDir/$sandboxName
-  packer build -var "version=$version" -var "docker-repo=$dockerRepo" packer.json
+  docker build -t sandbox-$sandboxName-pre:$version --build-arg $scriptDir/$sandboxName
+  cd $scriptDir/$sandboxName && packer build -var "version=$version" packer.json
 done

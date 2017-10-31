@@ -1,12 +1,12 @@
 {
   "builders": [{
     "type": "docker",
-    "image": "{{user `docker-repo`}}/sandbox-hdf-streaming-pre:{{user `version`}}",
+    "image": "sandbox-hdp-sandbox-name-pre:{{user `version`}}",
     "author": "eorendain@hortonworks.com",
     "pull": false,
     "commit": true,
     "privileged": true,
-    "run_command": ["-itd", "-h", "sandbox-hdf.hortonworks.com", "{{.Image}}", "/usr/sbin/init"]
+    "run_command": ["-itd", "-h", "sandbox-hdp.hortonworks.com", "{{.Image}}", "/usr/sbin/init"]
   }],
 
   "provisioners":
@@ -16,8 +16,7 @@
         "inline": [
           "mkdir -p /tmp/sandbox/build",
           "/sandbox/ambari/wait-for-ambari.sh"
-        ],
-        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
+        ]
       },
       {
         "type": "file",
@@ -28,33 +27,17 @@
         "type": "shell",
         "scripts": [
           "scripts/mysql-setup.sh",
-          "scripts/deploys/blueprint-deploy.sh",
-          "scripts/deploys/registry-deploy.sh",
-          "scripts/deploys/kafka-deploy.sh",
-          "scripts/deploys/storm-deploy.sh",
-          "scripts/deploys/nifi-deploy.sh",
-          "scripts/deploys/sam-deploy.sh"
+          "scripts/deploys/blueprint.sh",
+          "scripts/deploys/kafka.sh",
+          "scripts/deploys/nifi.sh"
         ],
         "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
       },
       {
         "type": "shell",
         "scripts": [
-          "scripts/views-create.sh",
-          "scripts/version-set.sh",
-          "scripts/hdf-directory-cleanup.sh",
           "scripts/service-cycle.sh",
-          "scripts/nifi-ssl-files.sh",
           "scripts/maintenance-mode.sh"
-        ],
-        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
-      },
-      {
-        "type": "shell",
-        "scripts": [
-          "scripts/tutorials/tutorial-setup.sh",
-          "scripts/tutorials/640.sh",
-          "scripts/tutorials/tutorial-cleanup.sh"
         ],
         "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
       },
@@ -63,15 +46,14 @@
         "inline": [
           "systemctl enable sandbox-ambari-services",
           "rm -rf /tmp/sandbox/build"
-        ],
-        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
+        ]
       }
     ],
 
   "post-processors": [
     {
       "type": "docker-tag",
-      "repository": "{{user `docker-repo`}}/sandbox-hdf-streaming",
+      "repository": "sandbox-hdp-sandbox-name",
       "tag": "{{user `version`}}"
     }
   ]
