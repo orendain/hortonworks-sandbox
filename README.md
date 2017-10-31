@@ -66,7 +66,7 @@ Build process and order of execution:
 -   Specify which sandbox you are expanding on by including it in the "FROM" line.
 -   If your sandbox auto-starts different services than those of the sandbox it is based off, edit the included `assets/service-startup.sh`, which is copied onto the sandbox for execution during each startup.
 -   Temporarily stop services from starting when building your sandbox layer, for fine-grain control of the build process.
--   If this Dockerfile is built using the pre-included script, the resulting docker image is postfix'ed with "-pre", as it an indicator that this is only the first step in the sandbox image-creation process.
+-   If this Dockerfile is built using the pre-included script, the resulting docker image is postfix'ed with "-pre", an indicator that this is only the first step in the sandbox image-creation process.
 
 ### packer.json
 
