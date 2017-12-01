@@ -1,0 +1,90 @@
+[
+  {
+    "type": "nifi-ambari-ssl-config",
+    "properties" : {
+      "nifi.toolkit.tls.token": "hortonworks1",
+      "nifi.security.keystorePasswd" : "hortonworks1",
+      "nifi.security.keyPasswd" : "hortonworks1",
+      "nifi.security.truststorePasswd" : ""
+    }
+  },
+  {
+    "type": "nifi-ambari-config",
+    "properties" : {
+      "nifi.security.encrypt.configuration.password": "hortonworks1",
+      "nifi.sensitive.props.key": "hortonworks1"
+    }
+  },
+  {
+    "type": "nifi-properties",
+    "properties" : {
+      "nifi.ui.autorefresh.interval" : "10 sec"
+    }
+  },
+  {
+    "type": "kafka-broker",
+    "properties" : {
+      "delete.topic.enable" : "true"
+    }
+  },
+  {
+    "type": "registry-common",
+    "properties" : {
+      "registry.storage.connector.password": "hortonworks1"
+    }
+  },
+  {
+    "type": "streamline-common",
+    "properties" : {
+      "streamline.storage.connector.password": "hortonworks1",
+      "storm.client.home" : "/usr/hdp/current/storm-client"
+    }
+  },
+  {
+    "type": "druid-broker",
+    "properties" : {
+      "druid.processing.numThreads" : "2",
+      "druid.processing.buffer.sizeBytes" : "50000000"
+    }
+  },
+  {
+    "type": "druid-historical",
+    "properties" : {
+      "druid.processing.numThreads" : "2",
+      "druid.processing.buffer.sizeBytes" : "50000000"
+    }
+  },
+  {
+    "type": "druid-middlemanager",
+    "properties" : {
+      "druid.processing.numThreads" : "2",
+      "druid.processing.buffer.sizeBytes" : "50000000"
+    }
+  },
+  {
+    "type": "druid-common",
+    "properties": {
+      "druid.metadata.storage.connector.password": "hortonworks1",
+      "druid.metadata.storage.type": "mysql",
+      "druid.metadata.storage.connector.port" : "3306",
+      "druid.metadata.storage.connector.connectURI" : "jdbc:mysql://localhost:3306/druid?createDatabaseIfNotExist=true",
+      "druid.extensions.loadList" : "[\"druid-datasketches\", \"druid-hdfs-storage\", \"druid-kafka-indexing-service\", \"mysql-metadata-storage\"]"
+    }
+  },
+  {
+    "type": "superset",
+    "properties": {
+      "SECRET_KEY": "hortonworks1",
+      "SUPERSET_DATABASE_PASSWORD": "hortonworks1",
+      "SUPERSET_DATABASE_PORT" : "3306",
+      "SUPERSET_WEBSERVER_PORT" : "9089",
+      "SUPERSET_DATABASE_TYPE" : "mysql"
+    }
+  },
+  {
+    "type": "superset-env",
+    "properties": {
+      "superset_admin_password": "admin"
+    }
+  }
+]

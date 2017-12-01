@@ -1,0 +1,9 @@
+# Files
+build.sh
+packer.json
+
+# Directories
+scripts
+
+# Misc
+**/*.git*

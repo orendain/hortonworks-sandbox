@@ -1,0 +1,60 @@
+{
+  "builders": [{
+    "type": "docker",
+    "image": "sandbox-hdf-bagel-pre:{{user `version`}}",
+    "author": "eorendain@hortonworks.com",
+    "pull": false,
+    "commit": true,
+    "privileged": true,
+    "run_command": ["-itd", "-h", "sandbox-hdf.hortonworks.com", "{{.Image}}", "/usr/sbin/init"]
+  }],
+
+  "provisioners":
+    [
+      {
+        "type": "shell",
+        "inline": [
+          "mkdir -p /tmp/sandbox/build",
+          "/sandbox/ambari/wait-for-ambari.sh"
+        ],
+        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
+      },
+      {
+        "type": "file",
+        "source": "assets/",
+        "destination": "/tmp/sandbox/build"
+      },
+      {
+        "type": "shell",
+        "scripts": [
+          "scripts/deploys/blueprint-deploy.sh",
+          "scripts/deploys/hbase-deploy.sh"
+        ],
+        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
+      },
+      {
+        "type": "shell",
+        "scripts": [
+          "scripts/version-set.sh",
+          "scripts/maintenance-mode.sh"
+        ],
+        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "systemctl enable sandbox-ambari-services",
+          "rm -rf /tmp/sandbox/build"
+        ],
+        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
+      }
+    ],
+
+  "post-processors": [
+    {
+      "type": "docker-tag",
+      "repository": "sandbox-hdf-bagel",
+      "tag": "{{user `version`}}"
+    }
+  ]
+}
