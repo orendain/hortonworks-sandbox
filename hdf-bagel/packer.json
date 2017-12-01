@@ -28,13 +28,7 @@
         "type": "shell",
         "scripts": [
           "scripts/deploys/blueprint-deploy.sh",
-          "scripts/deploys/hbase-deploy.sh"
-        ],
-        "execute_command": "{{ .Vars }} /bin/bash -vx {{ .Path }}"
-      },
-      {
-        "type": "shell",
-        "scripts": [
+          "scripts/deploys/hbase-deploy.sh",
           "scripts/version-set.sh",
           "scripts/maintenance-mode.sh"
         ],
